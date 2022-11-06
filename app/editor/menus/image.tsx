@@ -5,6 +5,7 @@ import {
   AlignImageLeftIcon,
   AlignImageRightIcon,
   AlignImageCenterIcon,
+  AlignFullWidthIcon,
 } from "outline-icons";
 import { EditorState } from "prosemirror-state";
 import isNodeActive from "@shared/editor/queries/isNodeActive";
@@ -21,6 +22,9 @@ export default function imageMenuItems(
   });
   const isRightAligned = isNodeActive(schema.nodes.image, {
     layoutClass: "right-50",
+  });
+  const isFullWidthAligned = isNodeActive(schema.nodes.image, {
+    layoutClass: "full-width",
   });
 
   return [
@@ -39,7 +43,8 @@ export default function imageMenuItems(
       active: (state) =>
         isNodeActive(schema.nodes.image)(state) &&
         !isLeftAligned(state) &&
-        !isRightAligned(state),
+        !isRightAligned(state) &&
+        !isFullWidthAligned(state),
     },
     {
       name: "alignRight",
@@ -47,6 +52,13 @@ export default function imageMenuItems(
       icon: AlignImageRightIcon,
       visible: true,
       active: isRightAligned,
+    },
+    {
+      name: "alignFullWidth",
+      tooltip: dictionary.alignFullWidth,
+      icon: AlignFullWidthIcon,
+      visible: true,
+      active: isFullWidthAligned,
     },
     {
       name: "separator",

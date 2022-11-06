@@ -128,8 +128,6 @@ const getLayoutAndTitle = (tokenTitle: string): TitleAttributes => {
     }
   }
 
-  console.log(IMAGE_CLASSES, attributes, tokenTitle);
-
   const match = tokenTitle.match(imageSizeRegex);
   if (match) {
     attributes.width = parseInt(match[1], 10);
@@ -722,14 +720,6 @@ const ImageComponent = (
   const style = isFullWidth
     ? { width: contentWidth }
     : { width: size.width || "auto" };
-
-  console.log({
-    isFullWidth,
-    documentWidth,
-    contentWidth,
-    size,
-    view: props.view,
-  });
 
   return (
     <div contentEditable={false} className={className}>

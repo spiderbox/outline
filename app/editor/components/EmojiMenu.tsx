@@ -1,5 +1,6 @@
 import data from "@emoji-mart/data";
 import FuzzySearch from "fuzzy-search";
+import { snakeCase } from "lodash";
 import React from "react";
 import CommandMenu, { Props } from "./CommandMenu";
 import EmojiMenuItem from "./EmojiMenuItem";
@@ -36,13 +37,17 @@ class EmojiMenu extends React.PureComponent<
 
     const n = search.toLowerCase();
     const result = searcher.search(n).map((item) => {
-      const title = item.skins[0].native;
+      // We snake_case the shortcode for backwards compatability with gemoji to
+      // avoid multiple formats being written into documents.
+      const shortcode = snakeCase(item.id);
+      const emoji = item.skins[0].native;
+
       return {
         name: "emoji",
-        title,
-        emoji: title,
+        title: emoji,
         description: item.name,
-        attrs: { markup: item.id, "data-name": item.id },
+        emoji,
+        attrs: { markup: shortcode, "data-name": shortcode },
       };
     });
 

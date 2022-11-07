@@ -62,7 +62,7 @@ type State = {
   selectedIndex: number;
 };
 
-class CommandMenu<T = MenuItem> extends React.Component<Props<T>, State> {
+class CommandMenu<T extends MenuItem> extends React.Component<Props<T>, State> {
   menuRef = React.createRef<HTMLDivElement>();
   inputRef = React.createRef<HTMLInputElement>();
 
@@ -79,7 +79,7 @@ class CommandMenu<T = MenuItem> extends React.Component<Props<T>, State> {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: State) {
+  shouldComponentUpdate(nextProps: Props<T>, nextState: State) {
     return (
       nextProps.search !== this.props.search ||
       nextProps.isActive !== this.props.isActive ||
@@ -87,7 +87,7 @@ class CommandMenu<T = MenuItem> extends React.Component<Props<T>, State> {
     );
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props<T>) {
     if (!prevProps.isActive && this.props.isActive) {
       // reset scroll position to top when opening menu as the contents are
       // hidden, not unrendered

@@ -1,8 +1,8 @@
-import nameToEmoji from "gemoji/name-to-emoji.json";
 import Token from "markdown-it/lib/token";
 import { InputRule } from "prosemirror-inputrules";
 import { NodeSpec, Node as ProsemirrorNode, NodeType } from "prosemirror-model";
 import { EditorState, TextSelection, Plugin } from "prosemirror-state";
+import { nameToEmoji } from "../lib/emoji";
 import { MarkdownSerializerState } from "../lib/markdown/serializer";
 import { run } from "../plugins/BlockMenuTrigger";
 import isInCode from "../queries/isInCode";

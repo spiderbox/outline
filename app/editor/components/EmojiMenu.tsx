@@ -1,5 +1,5 @@
+import data from "@emoji-mart/data";
 import FuzzySearch from "fuzzy-search";
-import gemojies from "gemoji";
 import React from "react";
 import CommandMenu, { Props } from "./CommandMenu";
 import EmojiMenuItem from "./EmojiMenuItem";
@@ -12,14 +12,14 @@ type Emoji = {
   attrs: { markup: string; "data-name": string };
 };
 
-const searcher = new FuzzySearch<{
-  names: string[];
-  description: string;
-  emoji: string;
-}>(gemojies, ["names"], {
-  caseSensitive: true,
-  sort: true,
-});
+const searcher = new FuzzySearch<typeof data.emojis["100"]>(
+  Object.values(data.emojis),
+  ["keywords"],
+  {
+    caseSensitive: true,
+    sort: true,
+  }
+);
 
 class EmojiMenu extends React.PureComponent<
   Omit<
@@ -36,14 +36,13 @@ class EmojiMenu extends React.PureComponent<
 
     const n = search.toLowerCase();
     const result = searcher.search(n).map((item) => {
-      const description = item.description;
-      const name = item.names[0];
+      const title = item.skins[0].native;
       return {
-        ...item,
         name: "emoji",
-        title: name,
-        description,
-        attrs: { markup: name, "data-name": name },
+        title,
+        emoji: title,
+        description: item.name,
+        attrs: { markup: item.id, "data-name": item.id },
       };
     });
 

@@ -8,9 +8,10 @@ const poolMax = parseInt(process.env.DATABASE_CONNECTION_POOL_MAX || "5", 10);
 const poolMin = parseInt(process.env.DATABASE_CONNECTION_POOL_MIN || "0", 10);
 
 export const sequelize = new Sequelize(
-  process.env.DATABASE_URL || process.env.DATABASE_CONNECTION_POOL_URL || "",
+  process.env.DATABASE_NAME, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD,
   {
     logging: (msg) => Logger.debug("database", msg),
+    host: process.env.DATABASE_HOST,
     typeValidation: true,
     dialectOptions: {
       ssl:
